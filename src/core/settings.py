@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     # packages
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_yasg',
+    'django_minio_backend',
 
     # apps
     'src.apps.user',
@@ -132,6 +134,23 @@ REST_FRAMEWORK = {
     ),
 }
 
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'description': 'JWT Authorization header using the Bearer scheme. Example: "Authorization: Bearer <your_token>"',
+            'name': 'Authorization',
+            'in': 'header',
+        }
+    },
+    'USE_SESSION_AUTH': False,
+    'JSON_EDITOR': True,
+    'DEFAULT_MODEL_RENDERING': 'example',
+    'DEFAULT_INFO': 'your_project.urls.schema_view',
+    'REFETCH_SCHEMA_WITH_AUTH': True,
+    'REFETCH_SCHEMA_ON_LOGOUT': False,
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -179,10 +198,10 @@ STORAGES = {
 MINIO_ENDPOINT = config("MINIO_ENDPOINT")
 MINIO_ACCESS_KEY = config("MINIO_ACCESS_KEY")
 MINIO_SECRET_KEY = config("MINIO_SECRET_KEY")
-MINIO_USE_HTTP = True
+MINIO_USE_HTTPS = False
 
 MINIO_EXTERNAL_ENDPOINT = config("MINIO_EXTERNAL_ENDPOINT")
-MINIO_EXTERNAL_ENDPOINT_USE_HTTP = True
+MINIO_EXTERNAL_ENDPOINT_USE_HTTPS = False
 MINIO_STORAGE_ENDPOINT = "127.0.0.1:9000"
 
 MINIO_PRIVATE_BUCKETS = []
